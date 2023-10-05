@@ -1,0 +1,31 @@
+Server:
+  name: ExamGenerator
+  port: 8081
+Logger:
+  level: INFO
+Gin:
+  isRelease: false
+LoggerConfigurations:
+  # Enable console logging
+  consoleLoggingEnabled: true
+  # EncodeLogsAsJson makes the log framework log JSON
+  encodeLogsAsJson: true
+  # FileLoggingEnabled makes the framework log to a file
+  # the fields below can be skipped if this value is false!
+  fileLoggingEnabled: true
+  # Directory to log to to when filelogging is enabled
+  directory: /Users/rockywang/ExamGenerator/ExamGeneratorBackend/log
+  # Filename is the name of the logfile which will be placed inside the directory
+  fileName: examgen.log
+  # MaxSize the max size in MB of the logfile before it's rolled
+  maxSize: 5
+  # MaxBackups the max number of rolled files to keep
+  maxBackups: 5
+  #MaxAge the max age in days to keep a logfile
+  maxAge: 7
+Database:
+  host: 127.0.0.1
+  port: 12071
+  dbname: exam_generator
+  username: exam_generator
+  password: exam_generator
