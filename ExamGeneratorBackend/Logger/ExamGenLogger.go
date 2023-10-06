@@ -4,9 +4,11 @@ import (
 	"io"
 	"os"
 	"path"
+	"sync"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -42,6 +44,11 @@ type LoggerConfig struct {
 type ExamGenLogger struct {
 	*zerolog.Logger
 }
+
+var (
+	LoggerInstance *ExamGenLogger
+	lock           = &sync.Mutex{}
+)
 
 func ConfigLogger(config LoggerConfig) *ExamGenLogger {
 
@@ -85,4 +92,21 @@ func newRollingFile(config LoggerConfig) io.Writer {
 		MaxSize:    config.MaxSize,    // megabytes
 		MaxAge:     config.MaxAge,     // days
 	}
+}
+
+func GetLogger() *ExamGenLogger {
+
+	if LoggerInstance == nil {
+		lock.Lock()
+		defer lock.Unlock()
+		if LoggerInstance == nil {
+			config := &LoggerConfig{}
+			viper.UnmarshalKey("LoggerConfigurations", config)
+			LoggerInstance = ConfigLogger(*config)
+		} else {
+			LoggerInstance.Info().Msg("Logger already initialized")
+		}
+	}
+
+	return LoggerInstance
 }

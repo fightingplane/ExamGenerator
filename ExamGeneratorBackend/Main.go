@@ -31,23 +31,9 @@ func initGin() {
 	}
 }
 
-var (
-	ExamGenLogger *logging.ExamGenLogger
-)
-
-func initLogger() {
-
-	config := &logging.LoggerConfig{}
-	viper.UnmarshalKey("LoggerConfigurations", config)
-
-	ExamGenLogger = logging.ConfigLogger(*config)
-	ExamGenLogger.Info().Msg("Logger initialized")
-}
-
 func main() {
 
 	initViper()
-	initLogger()
 	initGin()
 
 	r := gin.Default()
@@ -57,6 +43,6 @@ func main() {
 		})
 	})
 
-	ExamGenLogger.Info().Msg("Router initialized")
+	logging.GetLogger().Info().Msg("Router initialized")
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
