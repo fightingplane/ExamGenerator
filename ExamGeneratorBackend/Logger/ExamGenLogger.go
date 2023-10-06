@@ -46,7 +46,7 @@ type ExamGenLogger struct {
 }
 
 var (
-	LoggerInstance *ExamGenLogger
+	loggerInstance *ExamGenLogger
 	lock           = &sync.Mutex{}
 )
 
@@ -96,17 +96,17 @@ func newRollingFile(config LoggerConfig) io.Writer {
 
 func GetLogger() *ExamGenLogger {
 
-	if LoggerInstance == nil {
+	if loggerInstance == nil {
 		lock.Lock()
 		defer lock.Unlock()
-		if LoggerInstance == nil {
+		if loggerInstance == nil {
 			config := &LoggerConfig{}
 			viper.UnmarshalKey("LoggerConfigurations", config)
-			LoggerInstance = ConfigLogger(*config)
+			loggerInstance = ConfigLogger(*config)
 		} else {
-			LoggerInstance.Info().Msg("Logger already initialized")
+			loggerInstance.Info().Msg("Logger already initialized")
 		}
 	}
 
-	return LoggerInstance
+	return loggerInstance
 }
