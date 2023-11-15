@@ -14,7 +14,7 @@ LoggerConfigurations:
   # the fields below can be skipped if this value is false!
   fileLoggingEnabled: true
   # Directory to log to to when filelogging is enabled
-  directory: /Users/rockywang/ExamGenerator/ExamGeneratorBackend/log
+  directory: /workspaces/ExamGenerator/ExamGeneratorBackend/log/
   # Filename is the name of the logfile which will be placed inside the directory
   fileName: examgen.log
   # MaxSize the max size in MB of the logfile before it's rolled
